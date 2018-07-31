@@ -1,0 +1,85 @@
+<html>
+<head>
+  <title>Guessing Game</title>
+  <style>
+  body{
+    background-color: #FFDC00;
+  }
+  #box{
+    margin:30px auto;
+    width: 480px;
+  }
+  #box div{
+    display: inline-block;
+    border:2px solid #FF851B;
+    background-color: #fff;
+    color: #333;
+    width:38px;
+    height:30px;
+    margin:3px;
+    text-align: center;
+    padding-top: 6px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+  #box div:hover{
+    background-color: #eee;
+  }
+  .removed{
+    text-decoration: line-through;
+    color: #FF851B !important;
+  }
+  .success{
+    color: green !important;
+    font-weight: bold;
+    border-color: green !important
+  }
+  </style>
+</head>
+<body>
+  <button onclick="start()">START GAME</button>
+  <span id='randomNumber'></span>
+  <span id='message'></span>
+
+  <div id="box"></div>
+  <script>
+  var rand;
+    window.onload = function(){
+      const box = document.getElementById('box');
+      const message = document.getElementById("message")
+
+      for(var i=1; i<=100; i++){
+        box.innerHTML += "<div onclick='choose(this)'>"+i+"</div>";
+        if(i%10===0)
+        box.innerHTML +="<br>";
+      }
+    }
+    function start() {
+      rand = Math.round(Math.random()*100);
+      const randomNumber = document.getElementById('randomNumber');
+      randomNumber.innerHTML = rand;
+    }
+
+    function choose(e){
+
+      if(e.innerHTML > rand){
+          for(var i=e.innerHTML; i<=100;i++)
+            box.getElementsByTagName('div')[i-1].classList.add('removed')
+
+          message.innerHTML = "Number is on the left";
+      }
+      else if(e.innerHTML < rand){
+          for(var i=e.innerHTML; i>=1;i--)
+            box.getElementsByTagName('div')[i-1].classList.add('removed')
+
+          message.innerHTML = "Number is on the right";
+      }
+      else{
+        e.classList.add("success");
+      }
+
+    }
+
+  </script>
+</body>
+</html>
