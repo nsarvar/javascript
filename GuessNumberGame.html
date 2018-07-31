@@ -37,13 +37,22 @@
   </style>
 </head>
 <body>
-  <button onclick="start()">START GAME</button>
-  <span id='randomNumber'></span>
-  <span id='message'></span>
+
+  <div style="width: 500px; margin:20px auto; "><b>Rule of the game!</b> There are 100 numbers given in an ordered way.
+    You must find a number which is randomyly chosen by computer with maximum 7 steps.
+  </div>
+
+  <div style="text-align:center">
+  <button onclick="start()">START GAME</button><br>
+  <span id='randomNumber'></span><br>
+  <span>Message: </span> <span id='message'></span>
+</div>
 
   <div id="box"></div>
   <script>
   var rand;
+  var step = 0;
+
     window.onload = function(){
       const box = document.getElementById('box');
       const message = document.getElementById("message")
@@ -57,11 +66,17 @@
     function start() {
       rand = Math.round(Math.random()*100);
       const randomNumber = document.getElementById('randomNumber');
-      randomNumber.innerHTML = rand;
+      randomNumber.innerHTML = "?";
+      step = 0;
     }
 
     function choose(e){
+      step++;
 
+      if(!rand) {
+        alert("Start the game first!");
+        return;
+      }
       if(e.innerHTML > rand){
           for(var i=e.innerHTML; i<=100;i++)
             box.getElementsByTagName('div')[i-1].classList.add('removed')
@@ -76,6 +91,8 @@
       }
       else{
         e.classList.add("success");
+        message.innerHTML = "You found the number with " + step + " steps!";
+        randomNumber.innerHTML = rand;
       }
 
     }
